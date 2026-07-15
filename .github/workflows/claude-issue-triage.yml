@@ -38,4 +38,4 @@ jobs:
                - A general diagnosis of what needs to change to fix/implement it, at a high level (no code yet) — this will be used later to plan the actual implementation.
                - Any open questions or missing information needed before implementation can start.
 
-            Keep the comment concise and structured with headers/bullets. Do not modify any files in the repository and do not open a pull request — this run is triage/diagnosis only.
+            Keep the comment concise and structured with headers/bullets. Format the comment body in GitHub-flavored Markdown (headers, bullet lists, `inline code`, fenced code blocks where relevant) so it renders correctly on GitHub. Do not modify any files in the repository and do not open a pull request — this run is triage/diagnosis only.
