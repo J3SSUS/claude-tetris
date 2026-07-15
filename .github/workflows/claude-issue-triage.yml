@@ -1,0 +1,41 @@
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Triage issue with Claude
+        id: claude-triage
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: '--allowed-tools "Bash(gh issue view:*),Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*)"'
+          prompt: |
+            You are triaging GitHub issue #${{ github.event.issue.number }} in ${{ github.repository }}.
+
+            Steps:
+            1. Run `gh issue view ${{ github.event.issue.number }} --repo ${{ github.repository }} --json title,body,labels` to read the current issue.
+            2. Run `gh label list --repo ${{ github.repository }}` to see the labels available in this repository.
+            3. Decide which existing labels best fit the issue (e.g. bug, enhancement, documentation, question, good first issue, help wanted, duplicate, invalid, wontfix). Only use labels that already exist in the repo — do not invent new ones.
+            4. Apply the chosen labels with `gh issue edit ${{ github.event.issue.number }} --repo ${{ github.repository }} --add-label "<label1>,<label2>"`. If labels were already correctly set by a previous run, you may skip this step.
+            5. Post a single diagnostic comment on the issue with `gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body "..."` containing:
+               - A short summary of the problem as you understand it.
+               - The likely root cause or area of the codebase involved (refer to this repo's structure: `game.js`, `index.html`, `style.css` — see CLAUDE.md for architecture details).
+               - A general diagnosis of what needs to change to fix/implement it, at a high level (no code yet) — this will be used later to plan the actual implementation.
+               - Any open questions or missing information needed before implementation can start.
+
+            Keep the comment concise and structured with headers/bullets. Do not modify any files in the repository and do not open a pull request — this run is triage/diagnosis only.
