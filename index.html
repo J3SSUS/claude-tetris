@@ -51,11 +51,52 @@
       </aside>
     </div>
 
+    <div id="start-screen" class="overlay">
+      <div class="overlay-box">
+        <p id="overlay-title">TETRIS</p>
+        <div class="stats-row">
+          <div class="panel-section">
+            <span class="label">MAX COMBO</span>
+            <span class="value" id="start-best-combo">0</span>
+          </div>
+          <div class="panel-section">
+            <span class="label">MAX LINES</span>
+            <span class="value" id="start-best-lines">0</span>
+          </div>
+        </div>
+        <div class="score-table-wrap">
+          <span class="label">TOP 5</span>
+          <table class="score-table" id="start-score-table">
+            <thead>
+              <tr><th>#</th><th>Nombre</th><th>Puntos</th><th>Líneas</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <button id="play-btn">Jugar</button>
+        <button id="reset-scores-btn-start" class="secondary-btn">Resetear records</button>
+      </div>
+    </div>
+
     <div id="overlay" class="overlay hidden">
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+        <div id="save-score-form" class="hidden">
+          <input type="text" id="player-name-input" maxlength="12" placeholder="Tu nombre" />
+          <button id="save-score-btn">Guardar</button>
+        </div>
+        <div class="score-table-wrap">
+          <span class="label">TOP 5</span>
+          <table class="score-table" id="overlay-score-table">
+            <thead>
+              <tr><th>#</th><th>Nombre</th><th>Puntos</th><th>Líneas</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
         <button id="restart-btn">Reiniciar</button>
+        <button id="reset-scores-btn-overlay" class="secondary-btn">Resetear records</button>
       </div>
     </div>
   </div>
